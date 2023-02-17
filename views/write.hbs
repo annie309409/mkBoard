@@ -1,0 +1,78 @@
+{{#section 'css'}}
+  <style>
+    form{
+      width: 80%;
+      margin: 0 auto;
+    }
+    form div{
+      margin-top: 10px;
+    }
+    form div label{
+      display: inline-block;
+      width: 15%;
+      text-align: right;
+      float: left;
+    }
+    form div label+input, form div label+textarea{
+      margin-left: 20px;
+      width: 70%;
+    }
+    form div label+textarea{
+      height: 250px;
+    }
+    form div button:nth-of-type(1){
+      margin-left: calc(15% + 20px);
+    }
+    from div:nth-of-type(3) label{
+      margin-top: -200px;
+    }
+
+  </style>
+{{/section}}
+  <div class="cntWrap">
+    <div class="content">
+      <header>
+        <h2>새글쓰기</h2>
+      </header>
+      <section>
+        <form name="writefrm">
+          <div class="clearfix">
+            <label for="title">제목</label>
+            <input type="text" name="title" id="title">
+          </div>
+          <div class="clearfix">
+            <label for="newid">작성자</label>
+            <input type="text" value="익명" name="newid" id="newid" readonly>
+          </div>
+          <div class="clearfix">
+            <label for="viewnote">본문</label>
+            <textarea  name="viewnote" id="viewnote"></textarea>
+          </div>
+          <div>
+            <button type="submit">입력완료</button>
+            <button type="reset">다시입력</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+
+
+{{#section 'script'}}
+    <script>
+        let btn  = document.querySelector('button');
+        let frm  = document.writefrm;
+        btn.addEventListener('click',()=>{
+            if(frm.title==='') alert('글 제목이 없습니다.');
+            else if(frm.viewnote ==='') alert('글 내용이 없습니다');
+            else{
+                alert('해당 게시판은 익명의 게시판입니다. 상대를 배려해주세요!');
+                frm.method = 'post';
+                frm.submit();
+            }
+        });
+
+
+
+    </script>
+{{/section}}

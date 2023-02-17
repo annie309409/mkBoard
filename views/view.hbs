@@ -1,0 +1,73 @@
+{{#section 'css'}}
+    <style>
+        section {
+            width: 70%;
+            margin: 0 auto;
+        }
+        section div{
+            margin-top: 10px;
+        }
+        div label{
+            width: 15%;
+            display: inline-block;
+            text-align: right;
+        }
+        div label+span{
+            margin-left: 20px;
+        }
+        section>div:nth-of-type(4) span{
+            display: inline-block;
+            width: 70%;
+            height: 250px;
+            overflow-y: scroll;
+        }
+        div:nth-of-type(4) label{
+            vertical-align: top;
+        }
+        span button:nth-of-type(1){
+            margin-left: calc(15% + 20px);
+        }
+        span button{
+            cursor: pointer;
+        }
+
+
+    </style>
+{{/section}}
+
+    <div class="cntWrap">
+        <div class="content">
+            <header>
+                <h2>게시판 본문글</h2>
+            </header>
+            <section>
+                <div>
+                    <label>제목</label>
+                    <span>시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구!</span>
+                </div>
+                <div>
+                    <label>작성자</label>
+                    <span>siestageek</span>
+                </div>
+                <div>
+                    <label>작성일</label>
+                    <span>2014-05-05 12:45:05(777)</span>
+                </div>
+                <div>
+                    <label>본문</label>
+                    <span>
+                       시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구! 시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!시간은 금이라구,친구!
+
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        <button onclick="location.href='/board/write.hbs'">새글쓰기</button>
+                        <button onclick="location.href='/board/list.html'">목록으로</button>
+                        <button>수정하기</button>
+                        <button>삭제하기</button>
+                    </span>
+                </div>
+            </section>
+        </div>
+    </div>

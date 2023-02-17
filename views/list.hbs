@@ -1,0 +1,129 @@
+{{#section 'css'}}
+    <style>
+        table{
+            border-spacing: 0px;
+            width: 80%;
+            margin: 0 auto;
+
+        }
+        tr:nth-child(even){
+            background-color: #eee;
+        }
+        thead tr:nth-of-type(2){
+            background-color: #777;
+            color: #fff;
+        }
+        td,th{
+            border-left:1px solid #ccc;
+            border-top:1px solid #ccc;
+            line-height: 40px;
+            text-align: center;
+
+
+        }
+        td:nth-of-type(2),th:nth-of-type(2){
+            width: 50%;
+            height: 40px;
+
+        }
+        td:nth-of-type(2) a{
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+            word-break: break-word;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        td:last-child, th:last-child{
+            border-right:1px solid #ccc;
+        }
+        tr:last-child td{
+            border-bottom:1px solid #ccc;
+        }
+        thead tr:nth-of-type(1) th{
+            border: none;
+            text-align: right;
+        }
+        thead tr:nth-of-type(1) th button{
+            cursor: pointer;
+        }
+        section ul{
+            width: 70%;
+            margin: 40px auto 0;
+        }
+        section ul::after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        section ul li{
+            float: left;
+            width: calc(100% / 12);
+            cursor: pointer;
+            text-align: center;
+            line-height: 30px;
+        }
+        section ul li:first-child,section ul li:last-child{
+            background-color: #eeeeee;
+            border-radius: 10px;
+            box-shadow: 1px 1px 2px #222;
+        }
+        .now{
+            color: red;
+        }
+    </style>
+    {{/section}}
+
+    <div class="cntWrap">
+        <div class="content">
+            <header>
+                <h2>게시판</h2>
+            </header>
+            <section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="5">
+                                <button onclick="location.href='/write'">새글쓰기</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                            <th>조회</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#brd}}
+                        <tr>
+                            <td>{{brno}}</td>
+                            <td><a href="/board/view">{{title}}</a></td>
+                            <td>{{writer}}</td>
+                            <td>{{regdate}}</td>
+                            <td>777</td>
+                        </tr>
+                        {{/brd}}
+                    </tbody>
+                </table>
+                <ul>
+                    <li>이전</li>
+                    <li class="now">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>다음</li>
+                </ul>
+
+            </section>
+        </div>
+    </div>

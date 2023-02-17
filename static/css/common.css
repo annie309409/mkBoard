@@ -1,0 +1,84 @@
+ul,li,h1,h2,h3,h4,h5,h6,body{margin: 0;padding: 0;}
+a{text-decoration: none; }
+a:visited{color: #000;}
+a{color: #000;}
+
+a:active{color: orange}
+h1{
+    font-size: 28px;
+    line-height: 80px;
+}
+ul{list-style: none}
+.hdrWrap{
+    border-bottom: 1px solid black;
+    line-height: 40px;
+}
+.hdrWrap::after{
+    display: block;
+    content: '';
+    clear: both;
+}
+.hdrWrap header{
+    width: 90%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+.hdrWrap header nav{
+    width: 100%;
+}
+.hdrWrap header nav li{
+    width: calc(100% / 5 - 20px);
+    float: left;
+    text-align: center;
+    position: relative;
+    margin: 0px 10px;
+    overflow: hidden;
+}
+.hdrWrap header nav li::before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 40px;
+    height: 40px;
+    width: 100%;
+    background-color: rgba(220, 220, 220, 0.71);
+    z-index: -1;
+    transition: top 0.5s;
+}
+.hdrWrap header nav li:hover::before{
+    top: 0px;
+}
+.ftrWrap{
+    border-top: 1px solid black;
+    margin-top: 150px;
+}
+.ftrWrap footer{
+    width: 90%;
+    max-width: 1080px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/*컨텐츠 공통*/
+.cntWrap .content{
+    width: 90%;
+    max-width: 1080px;
+    margin: 40px auto 0;
+}
+.cntWrap .content header h2{
+    font-size: 25px;
+    line-height: 40px;
+}
+
+.cntWrap .content section{
+    margin-top: 40px;
+}
+
+button{
+    border: 0;
+    line-height: 30px;
+    width: 100px;
+    border-radius: 20px;
+    background-color: #f5f5f5;
+    box-shadow: 1px 1px 2px #222;
+}
