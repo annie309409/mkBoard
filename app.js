@@ -51,7 +51,7 @@ app.use((error,req,res)=>{
 
 //서버구동
 app.listen(port,()=>{
-    console.log('서버가 실행됐습니다. 종료 하려면 ctrl+v');
+    console.log('서버가 실행됐습니다. 종료 하려면 ctrl+c');
 });
 
 

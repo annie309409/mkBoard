@@ -1,0 +1,5 @@
+module.exports = {
+    user:'bigdata',
+    password:'bigdata',
+    connectString:'3.35.8.243:1521/XE'
+}

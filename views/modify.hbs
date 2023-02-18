@@ -26,27 +26,34 @@
     from div:nth-of-type(3) label{
       margin-top: -200px;
     }
+    #hidden{
+      display: none;
+    }
 
   </style>
 {{/section}}
+  {{#board}}
   <div class="cntWrap">
     <div class="content">
       <header>
-        <h2>새글쓰기</h2>
+        <h2>글 수정하기</h2>
       </header>
       <section>
         <form name="writefrm">
+          <div class="hidden">
+            <input type="text" name ="brno" value="{{brno}}">
+          </div>
           <div class="clearfix">
             <label for="title">제목</label>
-            <input type="text" name="title" id="title">
+            <input type="text" name="title" id="title" value="{{title}}">
           </div>
           <div class="clearfix">
             <label for="newid">작성자</label>
-            <input type="text" value="익명" name="newid" id="newid" readonly>
+            <input type="text" value="{{writer}}" name="newid" id="newid" readonly>
           </div>
           <div class="clearfix">
             <label for="viewnote">본문</label>
-            <textarea  name="viewnote" id="viewnote"></textarea>
+            <textarea  name="viewnote" id="viewnote">{{note}}</textarea>
           </div>
           <div>
             <button type="submit">입력완료</button>
@@ -56,18 +63,17 @@
       </section>
     </div>
   </div>
-
-
+  {{/board}}
 {{#section 'script'}}
     <script>
         let btn  = document.querySelector('button');
         let frm  = document.writefrm;
+
         btn.addEventListener('click',()=>{
             if(frm.title==='') alert('글 제목이 없습니다.');
             else if(frm.viewnote ==='') alert('글 내용이 없습니다');
             else{
-                alert('해당 게시판은 익명의 게시판입니다. 상대를 배려해주세요!');
-                frm.method = 'post';
+                frm.method = 'get';
                 frm.submit();
             }
         });

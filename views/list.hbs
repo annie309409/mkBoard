@@ -98,15 +98,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#brd}}
+                        {{#board}}
                         <tr>
                             <td>{{brno}}</td>
-                            <td><a href="/board/view">{{title}}</a></td>
+                            <td><a href="/view?brno={{brno}}&hits={{hits}}">{{title}}</a></td>
                             <td>{{writer}}</td>
                             <td>{{regdate}}</td>
-                            <td>777</td>
+                            <td>{{hits}}</td>
                         </tr>
-                        {{/brd}}
+                        {{/board}}
                     </tbody>
                 </table>
                 <ul>
