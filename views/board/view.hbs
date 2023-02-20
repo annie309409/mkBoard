@@ -60,10 +60,10 @@
                 </div>
                 <div>
                     <span>
-                        <button onclick="location.href='/write'">새글쓰기</button>
-                        <button onclick="location.href='/'">목록으로</button>
-                        <button onclick="location.href='/modify?brno={{brno}}'">수정하기</button>
-                        <button onclick="alert ('삭제되었습니다!'); location.href=`/del?brno={{brno}}`">삭제하기</button>
+                        <button onclick="location.href='/board/write'">새글쓰기</button>
+                        <button onclick="location.href='/board/list'">목록으로</button>
+                        <button onclick="location.href='/board/modify?brno={{brno}}'">수정하기</button>
+                        <button onclick="alert ('삭제되었습니다!'); location.href=`/board/del?brno={{brno}}`">삭제하기</button>
                     </span>
                 </div>
                 {{/board}}            

@@ -86,7 +86,7 @@
                     <thead>
                         <tr>
                             <th colspan="5">
-                                <button onclick="location.href='/write'">새글쓰기</button>
+                                <button onclick="location.href='/board/write'">새글쓰기</button>
                             </th>
                         </tr>
                         <tr>
@@ -101,7 +101,7 @@
                         {{#board}}
                         <tr>
                             <td>{{brno}}</td>
-                            <td><a href="/view?brno={{brno}}&hits={{hits}}">{{title}}</a></td>
+                            <td><a href="/board/view?brno={{brno}}&hits={{hits}}">{{title}}</a></td>
                             <td>{{writer}}</td>
                             <td>{{regdate}}</td>
                             <td>{{hits}}</td>

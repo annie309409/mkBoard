@@ -2,6 +2,10 @@ const oracledb = require('oracledb');
 const dbconfig = require('./dbconfig');
 
 const Oracle ={
+    options : {
+        resultSet: true,
+        outFormat: oracledb.OUT_FORMAT_OBJECT
+    },
     initConn: async ()=>{
         oracledb.initOracleClient({libDir:'C:/Java/instantclient_19_18'});
     },

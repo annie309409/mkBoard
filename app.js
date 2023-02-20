@@ -7,11 +7,15 @@ const bodyParser = require('body-parser');
 const port =  process.env.PORT || 3007;
 
 const indexRouter = require('./route/index');
+const boardRouter = require('./route/board');
+const memberRouter = require('./route/Member');
 const oracledb = require('./modules/Oracle');
+const session = require('express-session');
+
 
 oracledb.initConn();
 
-//미들웨어
+//핸들바
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -30,11 +34,29 @@ app.set('views',path.join(__dirname,'views'));
 app.set('view engine','hbs');
 
 
+//세션
+const maxAge = 1000 * 30;
+const sessionObj = {
+    resave: false, saveUninitialized: false,
+    secret: 'process.env.COOKIE_SECRET',
+    cookie: { httpOnly: true, secure: false, },
+    name: 'session-cookie',
+    maxAge: maxAge
+};
+app.use(session(sessionObj));
+
+app.use(function(req, res, next){
+    res.locals.session = req.session;
+    next();
+});
+
 //기본 라우팅
 app.use(express.static(path.join(__dirname,'static')));
 
 //정상요청 라우팅
 app.use('/',indexRouter);
+app.use('/board',boardRouter);
+// app.use('/member',memberRouter);
 
 // 에러페이지 처리
 app.use((req,res)=>{
