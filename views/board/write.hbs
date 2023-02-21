@@ -42,7 +42,7 @@
           </div>
           <div class="clearfix">
             <label for="newid">작성자</label>
-            <input type="text" value="익명" name="newid" id="newid" readonly>
+            <input type="text" value="{{session.userid}}" name="newid" id="newid" readonly>
           </div>
           <div class="clearfix">
             <label for="viewnote">본문</label>
@@ -66,7 +66,6 @@
             if(frm.title==='') alert('글 제목이 없습니다.');
             else if(frm.viewnote ==='') alert('글 내용이 없습니다');
             else{
-                alert('해당 게시판은 익명의 게시판입니다. 상대를 배려해주세요!');
                 frm.method = 'post';
                 frm.submit();
             }

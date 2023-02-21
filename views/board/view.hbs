@@ -30,6 +30,23 @@
         span button{
             cursor: pointer;
         }
+        .replay{
+            width: 80%;
+            background-color: #eee;
+            padding: 20px;
+        }
+        .replay textarea{
+            border: 0;
+            white-space: pre;
+        }
+        .replay a{
+            color: #000;
+            text-shadow: 1px 1px 4px black;
+            line-height: 40px;
+        }
+        .replay small{
+            color:#555;
+        }
 
 
     </style>
@@ -42,6 +59,7 @@
             </header>
             <section>
                 {{#board}}
+                <input type="hidden" value="{{brno}}">
                 <div>
                     <label>제목</label>
                     <span>{{title}}</span>
@@ -58,15 +76,60 @@
                     <label>본문</label>
                     <span>{{note}}</span>
                 </div>
+                {{/board}}
+                <div class="replay">
+                {{#re}}
+                    <div>
+                        <span><b>{{writer}}</b></span>
+                        <span>{{note}}</span>
+                        <span><small>{{regdate}}</small></span>
+                    </div>
+                {{/re}}
+                    <div>
+                        <input type="hidden" value="{{session.userid}}" id="userid">
+                        <textarea cols="70" rows="2" placeholder="바른말 고운말해주세요"></textarea>
+                        <a id="repBtn">등록</a>
+                    </div>
+                
+                </div>
                 <div>
                     <span>
                         <button onclick="location.href='/board/write'">새글쓰기</button>
                         <button onclick="location.href='/board/list'">목록으로</button>
-                        <button onclick="location.href='/board/modify?brno={{brno}}'">수정하기</button>
-                        <button onclick="alert ('삭제되었습니다!'); location.href=`/board/del?brno={{brno}}`">삭제하기</button>
+                        {{#if (eq session.userid board.[0].writer)}}
+                        <button id="modify">수정하기</button>
+                        <button onclick="alert ('삭제되었습니다!'); location.href=`/board/del?brno={{board.[0].brno}}`">삭제하기</button>
+                        {{/if}}
                     </span>
                 </div>
-                {{/board}}            
             </section>
         </div>
     </div>
+    {{#section 'script'}}
+        <script>
+            let modiBtn = document.querySelector('#modify');
+            let brno = document.querySelector('input').value;
+            let span = document.querySelectorAll('span');
+            let title =  span[0].innerText;
+            let writer = span[1].innerText;
+            let note = span[3].innerText;
+            //리플관련
+            let repBtn = document.querySelector('#repBtn');
+            console.log(repBtn);
+            let repwt = document.querySelector('#userid').value;
+            let repnt = document.querySelector('.replay textarea');
+            let renote = null;
+
+            repnt.addEventListener('keyup',function(){
+                renote= this.value;
+            });
+            {{#if (eq session.userid board.[0].writer)}}
+            modiBtn.addEventListener('click',()=>{
+                location.href=`/board/modify?brno=${brno}&writer=${writer}&title=${title}&note=${note}`;
+            })
+            {{/if}}
+            repBtn.addEventListener('click',()=>{
+                location.href=`/board/addrep?brno=${brno}&wt=${repwt}&nt=${renote}`;
+            })
+        </script>
+    {{/section}}

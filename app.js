@@ -11,6 +11,7 @@ const boardRouter = require('./route/board');
 const memberRouter = require('./route/Member');
 const oracledb = require('./modules/Oracle');
 const session = require('express-session');
+const helpers = require('./route/Helpers');
 
 
 oracledb.initConn();
@@ -22,14 +23,9 @@ app.use(bodyParser.json());
 app.engine('hbs',engine({
     extname: '.hbs',
     defaultLayout : 'layout',
-    helpers: {
-        section: function(name, options) {
-            if(!this._sections) this._sections = {}
-            this._sections[name] = options.fn(this)
-            return null
-        },
+    helpers: helpers,
     },
-}))
+));
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','hbs');
 
