@@ -100,7 +100,7 @@
                     <tbody>
                         {{#board}}
                         <tr>
-                            <td>{{brno}}</td>
+                            <td>{{brno2}}</td>
                             <td><a href="/board/view?brno={{brno}}&hits={{hits}}&wt={{writer}}">{{title}}</a></td>
                             <td>{{writer}}</td>
                             <td>{{regdate}}</td>
@@ -111,16 +111,9 @@
                 </table>
                 <ul>
                     <li>이전</li>
-                    <li class="now">1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li>10</li>
+                    {{#paging}}
+                        <li class="now"><a href="?crp={{pg}}">{{pg}}</a></li>
+                    {{/paging}}
                     <li>다음</li>
                 </ul>
 

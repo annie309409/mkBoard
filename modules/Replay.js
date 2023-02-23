@@ -42,7 +42,6 @@ class rep{
         let conn = null;
         let result = null;
         let params = [brno,note,writer];
-        console.log(params);
         try{
             conn = await oracledb.makeConn();
             result = await conn.execute(sql.insertRep,params);

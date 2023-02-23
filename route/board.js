@@ -4,11 +4,23 @@ const sqlInput = require('../modules/sqlInsert');
 const sqlRep = require('../modules/Replay');
 
 router.get('/list',async (req,res)=>{
-    let board = new sqlInput().selector().then(async result => {
+    let crp = (req.query.crp)? req.query.crp:1;
+    let pgs = 10;
+    let ttl = new sqlInput().total().then(async result=> {return await result});
+    ttl = Math.ceil(await ttl/pgs);
+    let paging =[];
+    let pg2=0;
+    for(let i =1; i<=ttl;i++){
+        (i%10===0)?pg2++:false;
+        paging.push({'pg':i});
+    }
+    console.log(pg2);
+
+    let board = new sqlInput().selector(crp,pgs).then(async result => {
         return await result;
     });
     if(req.session.userid){
-        await res.render('board/list',{title:'게시판 입니다.',board:await board});
+        await res.render('board/list',{title:'게시판 입니다.',board:await board,paging:paging});
     }else{
         res.redirect(303,'/');
     }
@@ -23,7 +35,7 @@ router.get('/view',async (req,res)=>{
     let re = new sqlRep().selectOne(brno).then(async res =>{
         return await res;
     });
-    //페이징 처리
+    //페이지 처리
     if(req.session.userid){
         res.render('board/view',{title:'페이지타이틀',board:await board,re:await re});
     }else{
