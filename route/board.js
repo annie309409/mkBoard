@@ -2,25 +2,28 @@ const express = require('express');
 const router = express.Router();
 const sqlInput = require('../modules/sqlInsert');
 const sqlRep = require('../modules/Replay');
+const pagenation =  require('../route/fns');
 
 router.get('/list',async (req,res)=>{
-    let crp = (req.query.crp)? req.query.crp:1;
-    let pgs = 10;
-    let ttl = new sqlInput().total().then(async result=> {return await result});
-    ttl = Math.ceil(await ttl/pgs);
-    let paging =[];
-    let pg2=0;
-    for(let i =1; i<=ttl;i++){
-        (i%10===0)?pg2++:false;
-        paging.push({'pg':i});
-    }
-    console.log(pg2);
+    let [crp, ftype, fkey ] = [ req.query.crp, req.query.ftype, req.query.fkey ];
+    let ppg = 15;
+    let ttl = new sqlInput().total(ftype,fkey).then(async result=> {return await result});
+    if(crp == undefined) crp =1;
+    let stnum = (crp - 1) * ppg + 1; 
 
-    let board = new sqlInput().selector(crp,pgs).then(async result => {
+    let qry = fkey ? `&ftype=${ftype}&fkey=${fkey}` : '';
+    //cpg: 현재 페이지
+    //ttl : qeury에서 가져온 토탈 글 개수 
+    //ppg : 조회할 페이지 기준
+    let pgs = new pagenation(crp,await ttl,ppg).pages();
+    let prevNxt = new pagenation(crp,await ttl,ppg).prevNext();
+
+    let board = new sqlInput().selector(stnum,ftype,fkey).then(async result => {
         return await result;
     });
+
     if(req.session.userid){
-        await res.render('board/list',{title:'게시판 입니다.',board:await board,paging:paging});
+        await res.render('board/list',{title:'게시판 입니다.',board:await board, pgs:pgs, pnbtn:prevNxt,qry:qry});
     }else{
         res.redirect(303,'/');
     }

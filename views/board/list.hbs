@@ -65,15 +65,32 @@
             text-align: center;
             line-height: 30px;
         }
-        section ul li:first-child,section ul li:last-child{
+        section ul li.btn{
             background-color: #eeeeee;
             border-radius: 10px;
             box-shadow: 1px 1px 2px #222;
         }
-        .now{
-            color: red;
+        a.now{
+            color: red !important;
+            text-decoration: none;
         }
+        
     </style>
+    {{/section}}
+
+    {{#section 'script'}}
+        <script>
+            let search = document.querySelector('.srhBtn');
+            let ftype = document.querySelector('#ftype');
+            let fkey = document.querySelector('#fkey');
+            search?.addEventListener('click', ()=>{
+                if (fkey.value) { 
+                    let qry = '?ftype=' + ftype.value + '&fkey=' + fkey.value;
+                    location.href = '/board/list' + qry;
+                }
+            });
+       
+        </script>
     {{/section}}
 
     <div class="cntWrap">
@@ -85,7 +102,16 @@
                 <table>
                     <thead>
                         <tr>
-                            <th colspan="5">
+                            <th colspan="3">
+                                <select name="ftype" id="ftype">
+                                    <option value="title">제목</option>
+                                    <option value="writer">글쓴이</option>
+                                    <option value="contents">내용</option>
+                                </select>
+                                <input type="text" name="fkey" id="fkey">
+                                <button type="button" class="srhBtn">검색하기</button>
+                            </th>
+                            <th colspan="2">
                                 <button onclick="location.href='/board/write'">새글쓰기</button>
                             </th>
                         </tr>
@@ -101,7 +127,7 @@
                         {{#board}}
                         <tr>
                             <td>{{brno2}}</td>
-                            <td><a href="/board/view?brno={{brno}}&hits={{hits}}&wt={{writer}}">{{title}}</a></td>
+                            <td><a href="/board/view?brno={{brno}}&hits={{hits}}&wt={{writer}}">{{title}}  [{{reply}}]</a></td>
                             <td>{{writer}}</td>
                             <td>{{regdate}}</td>
                             <td>{{hits}}</td>
@@ -110,11 +136,18 @@
                     </tbody>
                 </table>
                 <ul>
-                    <li>이전</li>
-                    {{#paging}}
-                        <li class="now"><a href="?crp={{pg}}">{{pg}}</a></li>
-                    {{/paging}}
-                    <li>다음</li>
+                    
+                    {{#pnbtn}}
+                        {{#isprev}}<li class="btn"><a href="?crp={{prev}}{{qry}}">이전</a></li>{{/isprev}}
+                        {{#isprev10}}<li class="btn"><a href="?crp={{prev10}}{{qry}}">이전10</a></li>{{/isprev10}}
+                    {{/pnbtn}}
+                    {{#pgs}}
+                        <li><a {{#if iscpg}}class="now"{{/if}} href="?crp={{num}}{{../qry}}">{{num}}</a></li>
+                    {{/pgs}}
+                    {{#pnbtn}}
+                        {{#isnext}}<li class="btn"><a href="?crp={{next}}{{qry}}">다음</a></li>{{/isnext}}
+                        {{#isnext10}}<li class="btn"><a href="?crp={{next10}}{{qry}}">다음10</a></li>{{/isnext10}}
+                    {{/pnbtn}}
                 </ul>
 
             </section>

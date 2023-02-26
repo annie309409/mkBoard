@@ -1,17 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const oracledb = require('../modules/Oracle');
+let ppg = 15;
 
 let sql = {
     'input' :`insert into testBoard(brno, title, writer, note) values (brno.nextval,:1,:2,:3)`,
-    'select':`SELECT brno,title, writer, note,hits, to_char(regdate,'YYYY-MM-DD') regdate ,rowno FROM (SELECT t.*, row_number() over (order by brno desc) rowno FROM TESTBOARD t)`,
-    'selectWhere':`WHERE rowno BETWEEN :1 AND :2`,
+    'select':`SELECT brno,title, writer, note,hits, to_char(regdate,'YYYY-MM-DD') regdate ,rowno, b.cnt recnt  FROM (SELECT t.*, row_number() over (order by brno desc) rowno FROM TESTBOARD t `,
+    'selectWhere':` WHERE rowno BETWEEN :1 AND :2 order by rowno`,
     'selectOne' : `select brno,title, writer, note,hits, to_char(regdate,'YYYY-MM-DD HH:MI:SS') regdate from testBoard where brno = :1 `,
     'UpdateHits' : 'UPDATE TESTBOARD SET HITS = HITS+1 WHERE BRNO =:1',
     'Delete' : 'DELETE FROM TESTBOARD  WHERE BRNO =:1',
     'Updates':`UPDATE TESTBOARD SET title=:1, note=:2,REGDATE= SYSTIMESTAMP WHERE BRNO =:3`,
     'totlaCnt' :`select count(brno) brno from testBoard`,
+    'cntRe':` ) a LEFT JOIN (SELECT bno,count(reno) cnt FROM rep GROUP BY bno) b
+    on a.brno = b.bno `,
 }
+
+//동적쿼리 생성
+const makeWhere = (ftype, fkey) => {
+    let where = ` where title = '${fkey}' `;
+    if (ftype == 'writer') where = ` where writer = '${fkey}' `
+    else if (ftype == 'contents') where = `  where note like '%${fkey}%'  `
+    return where;
+};
+
 class sqlinsert{
     constructor( title, writer, note,hits) {
         this.title = title;
@@ -33,17 +45,18 @@ class sqlinsert{
         }
     }
 
-    async selector(crp,pgs){
+    async selector(stnum, ftype, fkey){
         let conn = null;
         let result = null;
+        let params = [stnum, (stnum + ppg)-1];
         let dts = [];
         let tt = await this.total();
-    
-        //처음 들어오는 숫자계산
-        let srtNo = (crp-1)*pgs+1;
+        let where = '';
+        if (fkey !== undefined) where = makeWhere(ftype, fkey);
+
         try{
             conn = await oracledb.makeConn();
-            result = await conn.execute(sql.select+sql.selectWhere,[srtNo,(srtNo+pgs)-1],oracledb.options);
+            result = await conn.execute(sql.select+where+sql.cntRe+sql.selectWhere,params,oracledb.options);
             let rs =  await result.resultSet;
             let row = null;
             while((row = await rs.getRow())){
@@ -51,6 +64,7 @@ class sqlinsert{
                 dt1.brno = row.BRNO;
                 dt1.brno2 =  await tt--;
                 dt1.regdate = row.REGDATE;
+                dt1.reply = (row.RECNT===null)?0:row.RECNT;
                 dts.push(dt1);
             }
         }catch (e){
@@ -61,13 +75,15 @@ class sqlinsert{
         return await dts;
     }
 
-    async total(){
+    async total(ftype, fkey){
         let conn = null;
         let result = null;
         let dts = -1;
+        let where = '';
+        if (fkey !== undefined) where = makeWhere(ftype, fkey);
         try{
             conn = await oracledb.makeConn();
-            result = await conn.execute(sql.totlaCnt,[],oracledb.options);
+            result = await conn.execute(sql.totlaCnt+where,[],oracledb.options);
             let rs =  await result.resultSet;
             let row = null;
             while((row = await rs.getRow())){
@@ -139,7 +155,7 @@ class sqlinsert{
         }
         return await dts;
     }
-    
+
 }
 
 module.exports =sqlinsert;
